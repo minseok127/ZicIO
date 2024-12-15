@@ -9,7 +9,7 @@ The most significant change in *zicio_notify* was the process of generating NVMe
 
 When the read order becomes important, it turns into a more complex problem. There may be no consistent pattern in the reading process. The reading pattern varies by file format and differs for each query. The size of the skipped regions is not fixed and some regions such as metadata may need to be read again.
 
-ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible (although it may have been a premature optimization). This led me to consider whether it might be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
+ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible (although it may have been a premature optimization). This led me to consider whether it would be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
