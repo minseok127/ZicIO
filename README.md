@@ -1,4 +1,4 @@
-This repository archives my contributions to ZicIO, a project featured in a research paper accepted at sigmod 2025. It includes only partial code, which cannot independently run the full system.
+This repository archives the code I wrote for ZicIO and my thoughts about it. It includes only partial code, which cannot independently run the full system.
 
 ## zicio_notify.h, zicio_data_buffer_descriptor.c
 
