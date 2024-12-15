@@ -7,6 +7,8 @@ Originally, ZicIO was designed targeting PostgreSQL's sequential scan. However, 
 
 The most significant change in *zicio_notify* was the process of generating NVMe commands. Creating an NVMe command requires a physical block address, which means an *ext4_extent* is needed when using the ext4 file system. If the read order does not matter, the process is simple, as any part of the file's data can be read into any position in the buffer. There is no need to search for a specific *ext4_extent* to read into the buffer.
 
+However, the problem is different for columnar analytical systems.
+
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
