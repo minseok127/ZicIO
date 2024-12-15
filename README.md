@@ -9,6 +9,8 @@ The most significant change in *zicio_notify* was the process of generating NVMe
 
 When the read order becomes important, it turns into a more complex problem. There may be no consistent pattern in the reading process. The reading pattern varies by file format and differs for each query. The size of the skipped regions is not fixed and some regions such as metadata may need to be read again.
 
+ext4 avoids performing I/O operations every time it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. I felt it was necessary to keep the time complexity as low as possible (though it might have been premature optimization).
+
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
