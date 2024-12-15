@@ -1,11 +1,11 @@
-**This repository archives my contributions to ZicIO, a project featured in a research paper accepted at sigmod 2025. It includes only partial code, which cannot independently run the full system.**
+This repository archives my contributions to ZicIO, a project featured in a research paper accepted at sigmod 2025. It includes only partial code, which cannot independently run the full system.
 
 ## zicio_notify.h
 
-**Originally, ZicIO was designed targeting PostgreSQL's sequential scan. However, it was later extended to support various columnar analytical systems, leading to significant changes. PostgreSQL's sequential scan allowed reading the entire file in any order, and ZicIO was initially designed based on this assumption. In contrast, columnar analytical systems often read only specific parts of a file, where the order of reads is critical. To meet these new requirements, new call paths and APIs were introduced, which are prefixed with 
-*zicio_notify*. This naming reflects the idea that the user notifies ZicIO of the regions and order to read from the file.**
+Originally, ZicIO was designed targeting PostgreSQL's sequential scan. However, it was later extended to support various columnar analytical systems, leading to significant changes. PostgreSQL's sequential scan allowed reading the entire file in any order, and ZicIO was initially designed based on this assumption. In contrast, columnar analytical systems often read only specific parts of a file, where the order of reads is critical. To meet these new requirements, new call paths and APIs were introduced, which are prefixed with 
+*zicio_notify*. This naming reflects the idea that the user notifies ZicIO of the regions and order to read from the file.
 
-**The most significant change in *zicio_notify* was the process of generating NVMe commands.**
+The most significant change in *zicio_notify* was the process of generating NVMe commands.
 
 ## zicio_data_buffer_descriptor.c
 
