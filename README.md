@@ -17,9 +17,9 @@ The mapping table consists of two arrays. One is an array of data structure cont
 
 To calculate the size of read I/O that the mapping table can cover, it is necessary to know the size of the compressed information. The minimum I/O unit of an SSD is called a *sector*, which is 512 bytes. ext4 manages an NVMe page in units of 4KB, composed of 8 sectors. The device we used had a maximum I/O size of 256KB. Thus, the size of an I/O command can range from a minimum of 4KB to a maximum of 256KB, with intervals of 4KB. This range can be represented by values from 0 to 63, requiring 6 bits. The ext4_extent stores the physical block address across @ee_start_hi and @ee_start_lo, which together total 48 bits. ZicIO can read up to 128 files on a single channel, requiring 7 bits to represent this. So a total of 61 bits are required for a single read I/O. This information is declared as 8 bytes to ensure alignment, with the remaining 3 bits reserved.
 
-In summary, 8 bytes of compressed information can be used to create a single read I/O command ranging from 4KB to 256KB. Naively, in the worst case 4MB can cover 2GB of read I/O, and in the best case it can cover 128GB of read I/O. The worst case occurs when the data to be read is fully fragmented into 4KB segments. In the experiments conducted for the paper, datasets ranging from 80GB to 100GB were covered using 4MB to 8MB of memory. The process of populating this mapping table occurs during channel opening.
+In summary, 8 bytes of compressed information can be used to create a single read I/O command ranging from 4KB to 256KB. Naively, in the worst case 4MB can cover 2GB of read I/O, and in the best case it can cover 128GB of read I/O. The worst case occurs when the data to be read is fully fragmented into 4KB segments. In the experiments conducted for the paper, datasets ranging from 80GB to 100GB were covered using 4MB to 8MB of memory. 
 
-What are the overheads and constraints of this design? Are there opportunities for further improvement? Could this approach be applied to existing I/O techniques as well? Then, what advantages and disadvantages would this approach have?
+The process of populating this mapping table occurs during channel opening.
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
