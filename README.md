@@ -23,6 +23,4 @@ The process of populating this mapping table occurs during channel opening.
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
-These files are used to control how many NVMe commands are requested in parallel. ㄷ
-
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
