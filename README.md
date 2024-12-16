@@ -21,6 +21,11 @@ In summary, 8 bytes of compressed information can be used to create a single rea
 
 The process of populating this mapping table occurs during channel opening.
 
+Additional considerations:
+- Could the data be compressed further? For example, the physical block address might not need to be included with every command's information.
+- As the mapping table is consumed during reads, it could be reused. Instead of populating the table only during channel opening, periodic updates at runtime might allow covering a larger range with less memory.
+- What should be done if the physical block mapping changes unexpectedly?
+
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
