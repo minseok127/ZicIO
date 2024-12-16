@@ -11,7 +11,7 @@ When the read order becomes important, it turns into a more complex problem. The
 
 ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible (although it may have been a premature optimization). This led me to consider whether it would be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
 
-My initial focus was on avoiding extra overhead over the existing ZicIO implementation.
+The original ZicIO used a 4MB buffer to cache ext4_extent. My initial focus was on avoiding extra resource overhead over the previous implementation.
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
