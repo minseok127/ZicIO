@@ -13,7 +13,7 @@ ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previous
 
 The original ZicIO used a 4MB buffer to cache ext4_extent. My initial focus was on avoiding extra resource overhead over the previous implementation. So I started creating a mapping table to obtain the information needed for I/O at each buffer position while maintaining this amount of memory.
 
-The minimum I/O unit of an SSD is called a sector, which is 512 bytes. In ext4, an NVMe page is managed in units of 4KB, composed of 8 sectors. The device we used had a maximum I/O size of 256KB. Thus, the size of an I/O command can range from a minimum of 4KB to a maximum of 256KB, with intervals of 4KB. This range can be represented by values from 0 to 63, requiring 6 bits.
+The minimum I/O unit of an SSD is called a sector, which is 512 bytes. ext4 manages an NVMe page in units of 4KB, composed of 8 sectors. The device we used had a maximum I/O size of 256KB. Thus, the size of an I/O command can range from a minimum of 4KB to a maximum of 256KB, with intervals of 4KB. This range can be represented by values from 0 to 63, requiring 6 bits.
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
