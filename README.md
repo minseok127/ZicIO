@@ -19,6 +19,8 @@ To calculate the size of read I/O that the mapping table can cover, it is necess
 
 In summary, 8 bytes of compressed information can be used to create a single read I/O command ranging from 4KB to 256KB. Naively, in the worst case, 4MB can cover 2GB of read I/O, while in the best case, it can cover 128GB of read I/O. The worst case occurs when the data to be read is fully fragmented into 4KB segments. In the experiments conducted for the paper, datasets ranging from 80GB to 100GB were covered using 4MB to 8MB of memory.
 
+The process of populating this mapping table occurs during channel opening.
+
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
