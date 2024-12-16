@@ -21,6 +21,8 @@ In summary, 8 bytes of compressed information can be used to create a single rea
 
 The process of populating this mapping table occurs during channel opening.
 
+What are the overheads of this design? Are there opportunities for further improvement? Could this approach be applied to existing I/O techniques as well? Then, what advantages and disadvantages would this approach have?
+
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
