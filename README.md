@@ -23,4 +23,6 @@ This design still has constraints. The process of populating the mapping table o
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
+These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more significant impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because users slower than a single I/O request are quite rare. Even in the experiments presented in the paper, the slowest queries maintained around three parallel I/O requests.
+
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
