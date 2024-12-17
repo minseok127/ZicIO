@@ -23,7 +23,7 @@ This design still has constraints. The process of populating the mapping table o
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
-These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more significant impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because it is rare for users to be slower than a single I/O request. Even in the experiments presented in the paper, the slowest queries maintained around 2 ~ 3 parallel I/O requests.
+These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more significant impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because it is rare for users to be slower than a single I/O request.
 
 While I haven't reviewed all existing I/O techniques, I haven't found others that determine the number of parallel I/O requests based on user speed. So, until now, I think the responsibility for deciding block device usage is left to users. However, since the kernel virtualizes the device, users are unaware of how much others are using it. If the kernel could regulate device usage per user, it could enable fairer resource allocation. This idea was implemented as 'PBR' in the code but is no longer used as it is not closely related to the paper's rationale.
 
