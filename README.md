@@ -29,4 +29,4 @@ While I haven't reviewed all existing I/O techniques, I haven't found others tha
 
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
 
-One might think that release timing is meaningless if it doesn't significantly impact preparing data in a timely manner. However, I have a different perspective on the importance of timing. In fact, I believe that this timing is not about precisely controlling the release moment, but rather about designing a mechanism to schedule I/O effectively.
+One might think that release timing is meaningless if it doesn't significantly impact preparing data in a timely manner. However, I have a different perspective on the importance of timing. I think that this timing is not about precisely controlling the release moment, but rather about designing a mechanism to schedule I/O effectively.
