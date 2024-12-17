@@ -1,6 +1,6 @@
 ZicIO is the name of the asynchronous I/O system implemented for the paper ***Rapid Data Ingestion through DB-OS Co-design***, accepted at SIGMOD 2025. This repository archives the code I wrote for ZicIO and my thoughts about it. It includes only partial code, which cannot independently run the full system.
 
-# zicio_notify.h, zicio_data_buffer_descriptor.c
+## zicio_notify.h, zicio_data_buffer_descriptor.c
 
 Originally, ZicIO was designed targeting PostgreSQL's sequential scan. Then it was later extended to support various columnar analytical systems, leading to significant changes. PostgreSQL's sequential scan allowed reading the entire file in any order, and ZicIO was initially designed based on this assumption. In contrast, columnar analytical systems often read only specific parts of a file, where the order of reads is critical. So new call paths and APIs were introduced, which are prefixed with 
 ***zicio_notify***. This naming reflects the idea that the user notifies ZicIO of the regions and order to read from the file.
@@ -21,13 +21,13 @@ In summary, 8 bytes of compressed information can be used to create a single rea
 
 This design still has constraints. The process of populating the mapping table occurs during channel opening. So if the file system changes logical-to-physical mappings after channel opening, affected information will need to be updated. Memory usage also depends on how well the file system handles fragmentation, making the design's overheads and constraints closely tied to file system behavior.
 
-# zicio_flow_ctrl.h, zicio_flow_ctrl.c
+## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
 These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more significant impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because it is rare for users to be slower than a single I/O request. Even in the experiments presented in the paper, the slowest queries maintained around 2 ~ 3 parallel I/O requests.
 
 While I haven't reviewed all existing I/O techniques, I haven't found others that determine the number of parallel I/O requests based on user speed. So, until now, I think the responsibility for deciding block device usage is left to users. However, since the kernel virtualizes the device, users are unaware of how much others are using it. If the kernel could regulate device usage per user, it could enable fairer resource allocation. This idea was implemented as 'PBR' in the code but is no longer used as it is not closely related to the paper's rationale.
 
-# zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
+## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
 
 One might think that release timing is meaningless if it doesn't significantly impact preparing data in a timely manner. However, I have a different perspective on the importance of timing. I think that this timing is not about precisely controlling the release moment, but rather about designing a mechanism to schedule I/O effectively.
 
