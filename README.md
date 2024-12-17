@@ -31,7 +31,7 @@ While I haven't reviewed all existing I/O techniques, I haven't found others tha
 
 One might think that release timing is meaningless if it doesn't significantly impact preparing data in a timely manner. However, I have a different perspective on the importance of timing. I think that this timing is not about precisely controlling the release moment, but rather about designing a mechanism to schedule I/O effectively.
 
-How should I/O requests from different users be scheduled? Is an I/O request less urgent if it is farther from where the user is currently reading? But what if the user is very fast? Considering both the user's position and speed essentially means determining when the user will reach the data. This timing, therefore, becomes the basis for scheduling I/O in ZicIO.
+How should I/O requests from different users be scheduled? Is an I/O request less urgent if it is farther from where the user is currently reading? But what if the user is very fast? Considering both the user's position and speed essentially means determining when the user will reach the data. So this timing becomes the basis for scheduling I/O in ZicIO.
 
 The problem is that the interrupt handler is responsible for creating and scheduling I/O commands in ZicIO. This means the scheduling process must be designed to achieve minimal time complexity. From this perspective, simply using a multi-level queue for scheduling was not suitable. Because lower-priority I/O commands must eventually be elevated to higher priorities over time.
 
