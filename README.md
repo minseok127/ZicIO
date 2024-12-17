@@ -25,4 +25,6 @@ This design still has constraints. The process of populating the mapping table o
 
 These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more significant impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because users slower than a single I/O request are quite rare. Even in the experiments presented in the paper, the slowest queries maintained around three parallel I/O requests.
 
+While I haven't reviewed all existing I/O techniques, I haven't found others that determine the number of parallel I/O requests based on user speed. So, until now, I think the responsibility for deciding block device usage was left entirely to users. However, since the kernel virtualizes the device, users are unaware of how much others are using it. If the kernel could regulate device usage per user, it could enable fairer resource allocation. This idea was implemented as 'PBR' in the code but is no longer used as it is not closely related to the paper's rationale.
+
 ## zicio_nvme_cmd_timer_wheel.h, zicio_nvme_cmd_timer_wheel.c
