@@ -9,7 +9,7 @@ The most significant change in *zicio_notify* was the process of generating NVMe
 
 When the read order becomes important, it turns into a more complex problem. There may be no consistent pattern in the reading process. The reading pattern varies by file format and differs for each query. The size of the skipped regions is not fixed and some regions such as metadata may need to be read again.
 
-ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible (although it may have been a premature optimization). This led me to consider whether it would be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
+ext4 tries to minimize I/O operations when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible. This led me to consider whether it would be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
 
 So I started creating a mapping table that uses buffer positions as keys to retrieve the information needed for I/O for the given positions. The original ZicIO used a 4MB buffer to cache ext4_extent, and my focus was on maintaining this amount of memory, avoiding extra resource overhead over the previous implementation.
 
@@ -23,7 +23,7 @@ This design still has constraints. The process of populating the mapping table o
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
-These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more noticeable impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because it is rare for users to be slower than a single I/O request.
+These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. From my personal experience, this has a more noticeable impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. This is because it is rare for users to be slower than a single I/O request (However, this applies to the DBMS and microbenchmarks we experimented with. For relatively slower programs, setting the release timing might be effective).
 
 While I haven't reviewed all existing I/O techniques, I haven't found others that determine the number of parallel I/O requests based on user speed. So, until now, I think the responsibility for deciding block device usage is left to users. However, since the kernel virtualizes the device, users are unaware of how much others are using it. If the kernel could regulate device usage per user, it could enable fairer resource allocation. This idea was implemented as 'PBR' in the code but is no longer used as it is not closely related to the paper's rationale.
 
