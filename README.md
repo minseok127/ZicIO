@@ -1,4 +1,4 @@
-ZicIO is the name of the asynchronous I/O system implemented for the paper, accepted at SIGMOD 2025. This repository archives the code I wrote for ZicIO and my thoughts about it. It includes only partial code, which cannot independently run the full system.
+ZicIO is the name of the asynchronous I/O system implemented for the paper *Rapid Data Ingestion through DB-OS Co-design*, accepted at SIGMOD 2025. This repository archives the code I wrote for ZicIO and my thoughts about it. It includes only partial code, which cannot independently run the full system.
 
 ## zicio_notify.h, zicio_data_buffer_descriptor.c
 
