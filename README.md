@@ -2,7 +2,7 @@ ZicIO is the name of the asynchronous I/O system implemented for the paper ***Ra
 
 ## zicio_flow_ctrl.h, zicio_flow_ctrl.c
 
-These files are related to the logic that controls how many I/O requests are issued in parallel in ZicIO. I think this has a more noticeable impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. Because it is rare for users to be slower than a single I/O request.
+These files are related to the logic that controls how many I/O requests are issued in parallel. I think this has a more noticeable impact on achieving the goal of preparing data just in time for the user, compared to setting the release timing of I/O. Because it is rare for users to be slower than a single I/O request.
 
 In the NVMe interrupt handler, after ensuring I/O results are recognized by libzicio, ZicIO updates the exponential moving average (EMA) for the I/O latency. The EMA is used because it eliminates the need to store all previous I/O latencies for updates, requiring only the most recent latency value and the current EMA.
 
