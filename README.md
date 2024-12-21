@@ -9,7 +9,7 @@ The most significant change in *zicio_notify* was the process of generating NVMe
 
 But when the read order becomes important, it turns into a more complex problem. There may be no consistent pattern in the reading process. The reading pattern varies by file format and differs for each query. Then how can we search for the required ext4_extent?
 
-The ext4 file system tries to minimize I/O when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. If the extent is not found in the cache, ext4 accesses the root node of the extent tree through the inode and follows the page cache logic to search the extent block.
+The ext4 file system tries to minimize I/O when it looks for an ext4_extent. Previously accessed extents are managed in memory using a red-black tree. Before performing an I/O operation, ext4 first searches for the required extent in this cache. If the extent is not found in the cache, ext4 accesses the root node of the extent tree through the inode and follows the page cache logic to traverse the child nodes.
 
 In ZicIO, the task of finding ext4_extent is handled by the interrupt handler. So I felt it was necessary to keep the time complexity as low as possible. This led me to consider whether it would be possible to directly obtain the information corresponding to the buffer position without traversing the tree.
 
