@@ -35,7 +35,7 @@ Note that acquiring *request* is performed specifically by the softirq daemon, n
 
 Looking back, using softirq this way wasn’t necessary. By the time the implementation had progressed significantly, I became aware of various mechanisms in Linux for defering tasks to run in the process context, such as work_queue. Since ZicIO was already implemented using softirq, it wasn’t changed.
 
-If the I/O throughput exceeds the user's consumption rate, *requests* need to be returned to the system. In such cases, no additional processing is required in the ZicIO logic, and the flow proceeds to the default NVMe interrupt handler logic.
+If the I/O throughput exceeds the user's consumption rate, *requests* need to be returned to the blk_mq layer. In such cases, no additional processing is required in the ZicIO logic, and the flow proceeds to the default NVMe interrupt handler logic.
 
 There’s some code here that’s implemented but not actually used right now. While I haven't reviewed all existing I/O techniques, I haven't found others that determine the number of parallel I/O requests based on user speed. So I believe the responsibility for deciding block device usage is left to users. Users, however, are unaware of how much others are using the device due to kernel virtualization. If the kernel could regulate device usage per user, it could enable fairer resource allocation. This idea was implemented as 'PBR' in the code but is no longer used as it is not closely related to the paper's rationale.
 
